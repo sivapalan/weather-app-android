@@ -1,17 +1,20 @@
 package vs.weather.activities;
 
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import vs.weather.data.MyWeatherDataPlaces;
 import vs.weather.R;
 import vs.weather.adapters.WeatherDataListAdapter;
 import vs.weather.dialogs.AddPlaceDialogFragment;
+import vs.weather.models.WeatherData;
 
 public class WeatherDataListActivity extends AppCompatActivity {
 
@@ -55,6 +58,35 @@ public class WeatherDataListActivity extends AppCompatActivity {
             // If this view is present, then the activity should be in two-pane mode.
             ((WeatherDataListAdapter) mAdapter).setTwoPane(true);
         }
+
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                //Remove swiped item
+                final WeatherData wd = MyWeatherDataPlaces.getList().get(viewHolder.getAdapterPosition());
+                MyWeatherDataPlaces.remove(wd);
+                Snackbar undoSnackbar = Snackbar
+                    .make(mRecyclerView, wd.getLocation().getName() + " was removed", Snackbar.LENGTH_LONG)
+                    .setAction("UNDO", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            MyWeatherDataPlaces.undoLastRemove();
+                            Snackbar redoConfirmationSnackbar = Snackbar.make(mRecyclerView, "Restored", Snackbar.LENGTH_SHORT);
+                            redoConfirmationSnackbar.show();
+                        }
+                    });
+
+                undoSnackbar.show();
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
     }
 
 }

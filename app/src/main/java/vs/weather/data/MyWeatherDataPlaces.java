@@ -47,6 +47,36 @@ public class MyWeatherDataPlaces {
         notifyListeners();
     }
 
+    private static int mostRecentlyRemovedIndex = -1;
+    private static WeatherData mostRecentlyRemovedWeatherData;
+
+    public static WeatherData remove(WeatherData weatherData) {
+        int index = weatherDataList.indexOf(weatherData);
+        if (index >= 0) {
+            weatherDataList.remove(index);
+            weatherDataMap.remove(weatherData.getLocation().getGeoLocation().getId());
+            mostRecentlyRemovedIndex = index;
+            mostRecentlyRemovedWeatherData = weatherData;
+            notifyListeners();
+            return  weatherData;
+        }
+        return null;
+    }
+
+    public static boolean undoLastRemove() {
+        if (mostRecentlyRemovedIndex >= 0) {
+            getList().add(mostRecentlyRemovedIndex, mostRecentlyRemovedWeatherData);
+            getMap().put(mostRecentlyRemovedWeatherData.getLocation().getGeoLocation().getId(),
+                    mostRecentlyRemovedWeatherData);
+            mostRecentlyRemovedIndex = -1;
+            mostRecentlyRemovedWeatherData = null;
+            notifyListeners();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Adds a new place and fetches its weather data.
      * @param placePath Path to place.Examples: "<i>Norway/Telemark/Sauherad/Gvarv</i>",
