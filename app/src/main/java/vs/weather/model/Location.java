@@ -4,10 +4,12 @@ import org.simpleframework.xml.Element;
 
 public class Location {
 
-    @Element
+    @Element(name = "name")
     private String name;
-    @Element
+    @Element(name = "country")
     private String country;
+    @Element(name = "location")
+    private GeoLocation geoLocation;
 
     public String getName() {
         return name;
@@ -15,5 +17,9 @@ public class Location {
 
     public String getCountry() {
         return country;
+    }
+
+    public GeoLocation getGeoLocation() {
+        return geoLocation;
     }
 }

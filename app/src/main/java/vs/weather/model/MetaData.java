@@ -16,11 +16,19 @@ public class MetaData {
     @Element
     private String nextupdate;
 
-    public Date getLastUpdateTime() throws ParseException {
-        return DATE_FORMAT.parse(lastupdate);
+    public Date getLastUpdateTime() {
+        try {
+            return DATE_FORMAT.parse(lastupdate);
+        } catch (ParseException e) {
+            return null;
+        }
     }
 
-    public Date getNextUpdateTime() throws ParseException {
-        return DATE_FORMAT.parse(nextupdate);
+    public Date getNextUpdateTime() {
+        try {
+            return DATE_FORMAT.parse(nextupdate);
+        } catch (ParseException e) {
+            return null;
+        }
     }
 }

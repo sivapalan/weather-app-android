@@ -21,8 +21,13 @@ public class TextualForecastItem {
     @Element(name = "body")
     private String text;
 
-    public Date getDate() throws ParseException {
-        return DATE_FORMAT.parse(date);
+    public Date getDate() {
+        try {
+            return DATE_FORMAT.parse(date);
+        } catch (ParseException e) {
+            return null;
+        }
+
     }
 
     public String getDay() {

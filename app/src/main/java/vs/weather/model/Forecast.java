@@ -10,7 +10,7 @@ public class Forecast {
     @ElementList(name = "tabular")
     private List<TabularForecastItem> tabularForecastList;
 
-    @Element(name = "text")
+    @Element(name = "text", required = false)
     private TextNode textNode;
 
     public List<TabularForecastItem> getTabularForecastList() {

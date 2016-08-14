@@ -25,5 +25,7 @@ public class WeatherDataTest {
         assertEquals("Gvarv", data.getLocation().getName());
         assertEquals("Norway", data.getLocation().getCountry());
         assertEquals("celsius", data.getForecast().getTabularForecastList().get(0).getTemperature().getUnit());
+
+        assertEquals(43354, data.getLocation().getGeoLocation().getId());
     }
 }

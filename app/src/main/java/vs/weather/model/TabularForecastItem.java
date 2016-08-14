@@ -24,12 +24,20 @@ public class TabularForecastItem {
     @Element
     private Symbol symbol;
 
-    public Date getStartTime() throws ParseException {
-        return DATE_FORMAT.parse(from);
+    public Date getStartTime() {
+        try {
+            return DATE_FORMAT.parse(from);
+        } catch (ParseException e) {
+            return null;
+        }
     }
 
-    public Date getEndTime() throws ParseException {
-        return DATE_FORMAT.parse(to);
+    public Date getEndTime() {
+        try {
+            return DATE_FORMAT.parse(to);
+        } catch (ParseException e) {
+            return null;
+        }
     }
 
     public int getPeriod() {
