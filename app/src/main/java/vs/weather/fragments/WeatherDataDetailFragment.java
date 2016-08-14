@@ -48,12 +48,6 @@ public class WeatherDataDetailFragment extends Fragment {
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             mItem = MyWeatherDataPlaces.getMap().get(getArguments().getLong(ARG_ITEM_ID));
-
-            Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
-            if (appBarLayout != null) {
-                appBarLayout.setTitle(mItem.getLocation().getName());
-            }
         }
     }
 
@@ -63,6 +57,13 @@ public class WeatherDataDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.weatherdata_detail, container, false);
 
         if (mItem != null) {
+
+            Activity activity = this.getActivity();
+            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
+            if (appBarLayout != null) {
+                appBarLayout.setTitle(mItem.getLocation().getName());
+            }
+
             RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview_weatherdata_detail);
             recyclerView.setHasFixedSize(true);
 
