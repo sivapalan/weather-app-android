@@ -3,6 +3,7 @@ package vs.weather;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import vs.weather.model.WeatherData;
@@ -29,8 +30,13 @@ public class WeatherDataHandler {
         protected WeatherData doInBackground(String... urls) {
             try {
                 InputStream inputStream = WeatherDataDownloader.getInputStream(urls[0]);
+
                 return WeatherDataDeserializer.deserialize(inputStream);
-            } catch (Exception e) {
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Downloading Error", e);
+                return null;
+            }
+            catch (Exception e) {
                 Log.e(LOG_TAG, "Parsing Error", e);
                 return null;
             }

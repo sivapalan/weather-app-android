@@ -63,7 +63,7 @@ public class MyWeatherDataPlaces {
             WeatherDataHandler wdh = new WeatherDataHandler(place, new WeatherDataHandler.ICallback() {
                 @Override
                 public void call(WeatherData weatherData) {
-                    add(weatherData);
+                    if (weatherData != null) add(weatherData);
                 }
             });
             wdh.fetch();

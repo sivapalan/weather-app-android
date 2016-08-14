@@ -42,8 +42,15 @@ public class WeatherDataListActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new WeatherDataAdapter(MyWeatherDataPlaces.getList());
+        mAdapter = new WeatherDataAdapter(this, MyWeatherDataPlaces.getList());
         mRecyclerView.setAdapter(mAdapter);
+
+        if (findViewById(R.id.weatherdata_detail_container) != null) {
+            // The detail container view will be present only in the
+            // large-screen layouts (res/values-w900dp).
+            // If this view is present, then the activity should be in two-pane mode.
+            ((WeatherDataAdapter) mAdapter).setTwoPane(true);
+        }
     }
 
 }

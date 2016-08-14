@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TableLayout
+        android:id="@+id/weatherdata_table"
+        android:stretchColumns="*"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/textView_weatherdata_detail_weekday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mon"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/textView_weatherdata_detail_timerange"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="12:00 - \n18:00" />
+
+            <TextView
+                android:id="@+id/textView_weatherdata_detail_temperature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="15°"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/imageView_weatherdata_detail_weather_symbol"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/sym_01d" />
+
+        </TableRow>
+
+    </TableLayout>
+</LinearLayout>

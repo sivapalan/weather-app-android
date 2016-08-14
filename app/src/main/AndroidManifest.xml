@@ -21,13 +21,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LocationDetailActivity"
-            android:label="@string/title_location_detail"
-            android:parentActivityName=".LocationListActivity"
+            android:name=".WeatherDataDetailActivity"
+            android:parentActivityName=".WeatherDataListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="vs.weather.LocationListActivity" />
+                android:value="vs.weather.WeatherDataListActivity" />
         </activity>
         <activity android:name=".LocationListActivity" />
     </application>

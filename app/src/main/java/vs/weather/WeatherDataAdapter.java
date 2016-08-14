@@ -1,6 +1,9 @@
 package vs.weather;
 
-import android.support.design.widget.Snackbar;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,16 +18,18 @@ import java.util.List;
 
 import vs.weather.model.TabularForecastItem;
 import vs.weather.model.WeatherData;
+import vs.weather.util.Globals;
 import vs.weather.util.ImageUtils;
 
 
 public class WeatherDataAdapter extends RecyclerView.Adapter<WeatherDataAdapter.ViewHolder> {
 
     private List<WeatherData> mItems;
+    private AppCompatActivity mActivity;
+    private boolean mTwoPane;
 
-    private static final String UNICODE_DEGREE_SIGN = "\u00B0";
-
-    public WeatherDataAdapter(List<WeatherData> items) {
+    public WeatherDataAdapter(AppCompatActivity activity, List<WeatherData> items) {
+        mActivity = activity;
         mItems = items;
         MyWeatherDataPlaces.addListener(this);
     }
@@ -40,6 +45,7 @@ public class WeatherDataAdapter extends RecyclerView.Adapter<WeatherDataAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         final WeatherData weatherData = mItems.get(position);
         final String name = weatherData.getLocation().getName();
+        final long id = weatherData.getLocation().getGeoLocation().getId();
 
         holder.titleTextView.setText(name);
         holder.setDaysWeatherData(weatherData);
@@ -47,8 +53,21 @@ public class WeatherDataAdapter extends RecyclerView.Adapter<WeatherDataAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v, name + " (" + weatherData.getLocation().getGeoLocation().getId() + ")",
-                        Snackbar.LENGTH_LONG).show();
+                if (mTwoPane) {
+                    Bundle arguments = new Bundle();
+                    arguments.putLong(WeatherDataDetailFragment.ARG_ITEM_ID, id);
+                    WeatherDataDetailFragment fragment = new WeatherDataDetailFragment();
+                    fragment.setArguments(arguments);
+                    mActivity.getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.weatherdata_detail_container, fragment)
+                            .commit();
+                } else {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, WeatherDataDetailActivity.class);
+                    intent.putExtra(WeatherDataDetailFragment.ARG_ITEM_ID, id);
+
+                    context.startActivity(intent);
+                }
             }
         });
     }
@@ -58,10 +77,13 @@ public class WeatherDataAdapter extends RecyclerView.Adapter<WeatherDataAdapter.
         return mItems.size();
     }
 
+    public void setTwoPane(boolean twoPane) {
+        mTwoPane = twoPane;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         public final TextView titleTextView;
         private final TableLayout forecastTable;
-        private final DateFormat DATE_FORMAT = new SimpleDateFormat("EEE");
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -90,8 +112,8 @@ public class WeatherDataAdapter extends RecyclerView.Adapter<WeatherDataAdapter.
                     weatherSymbolImageView.setImageResource(ImageUtils.getWeatherSymbolResourceId(v.getContext(),
                             forecastItem.getSymbol().getVar()));
 
-                    weekdayTextView.setText(DATE_FORMAT.format(forecastItem.getStartTime()));
-                    temperatureTextView.setText(String.format("%d" + UNICODE_DEGREE_SIGN, (int) forecastItem.getTemperature().getValue()));
+                    weekdayTextView.setText(Globals.WEEKDAY_DATE_FORMAT.format(forecastItem.getStartTime()));
+                    temperatureTextView.setText(String.format("%d" + Globals.UNICODE_DEGREE_SIGN, (int) forecastItem.getTemperature().getValue()));
 
                     if (i < days.length - 1) v = days[++i];
                     else break;
