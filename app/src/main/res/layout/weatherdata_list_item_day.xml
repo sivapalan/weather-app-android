@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/textView_weatherdata_day_weekday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MON"
+        android:textAlignment="center" />
+
+    <ImageView
+        android:id="@+id/imageView_weatherdata_day_weather_symbol"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sym_01d" />
+
+    <TextView
+        android:id="@+id/textView_weatherdata_day_temperature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="15 °"
+        android:textAlignment="center" />
+
+</LinearLayout>
