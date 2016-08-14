@@ -3,7 +3,6 @@ package vs.weather.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import vs.weather.R;
+import vs.weather.data.MyWeatherDataPlaces;
+import vs.weather.dialogs.TextualForecastDialogFragment;
 import vs.weather.fragments.WeatherDataDetailFragment;
+import vs.weather.models.WeatherData;
 
 public class WeatherDataDetailActivity extends AppCompatActivity {
 
@@ -23,14 +25,24 @@ public class WeatherDataDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        final long weatherDataId = getIntent().getLongExtra(WeatherDataDetailFragment.ARG_ITEM_ID, -1);
+
+        WeatherData weatherData = MyWeatherDataPlaces.getMap().get(weatherDataId);
+        if (weatherData.getForecast().getTextualForecastList() != null) {
+            final TextualForecastDialogFragment textualForecastDialog = new TextualForecastDialogFragment();
+
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.setVisibility(View.VISIBLE);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle arguments = new Bundle();
+                    arguments.putLong(WeatherDataDetailFragment.ARG_ITEM_ID, weatherDataId);
+                    textualForecastDialog.setArguments(arguments);
+                    textualForecastDialog.show(getSupportFragmentManager(), "TextualForecastDialog");
+                }
+            });
+        }
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();

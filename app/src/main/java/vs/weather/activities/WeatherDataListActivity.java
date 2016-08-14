@@ -1,7 +1,6 @@
 package vs.weather.activities;
 
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +11,7 @@ import android.view.View;
 import vs.weather.data.MyWeatherDataPlaces;
 import vs.weather.R;
 import vs.weather.adapters.WeatherDataListAdapter;
-import vs.weather.fragments.AddPlaceDialogFragment;
+import vs.weather.dialogs.AddPlaceDialogFragment;
 
 public class WeatherDataListActivity extends AppCompatActivity {
 

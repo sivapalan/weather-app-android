@@ -1,4 +1,4 @@
-package vs.weather.fragments;
+package vs.weather.dialogs;
 
 import android.app.Dialog;
 import android.content.DialogInterface;

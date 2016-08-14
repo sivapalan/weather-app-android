@@ -18,6 +18,7 @@ public class Forecast {
     }
 
     public List<TextualForecastItem> getTextualForecastList() {
+        if (textNode == null) return null;
         return textNode.getTextualForecastList();
     }
 
