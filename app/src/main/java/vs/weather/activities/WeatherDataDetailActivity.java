@@ -1,4 +1,4 @@
-package vs.weather.views;
+package vs.weather.activities;
 
 import android.content.Intent;
 import android.os.Bundle;

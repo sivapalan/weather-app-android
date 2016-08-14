@@ -32,9 +32,35 @@ public class MyWeatherDataPlaces {
     }
 
     public static void add(WeatherData weatherData){
-        weatherDataList.add(weatherData);
+        long id = weatherData.getLocation().getGeoLocation().getId();
+        if (weatherDataMap.containsKey(id)) {
+            for (int i = 0; i < weatherDataList.size(); i++) {
+                if (weatherDataList.get(i).getLocation().getGeoLocation().getId() == id) {
+                    weatherDataList.set(i, weatherData);
+                    break;
+                }
+            }
+        } else {
+            weatherDataList.add(weatherData);
+        }
         weatherDataMap.put(weatherData.getLocation().getGeoLocation().getId(), weatherData);
         notifyListeners();
+    }
+
+    /**
+     * Adds a new place and fetches its weather data.
+     * @param placePath Path to place.Examples: "<i>Norway/Telemark/Sauherad/Gvarv</i>",
+     *                  "<i>USA/New_York/New_York"</i>".
+     * @see WeatherData
+     */
+    public static void addPlace(String placePath) {
+        WeatherDataHandler wdh = new WeatherDataHandler(placePath, new WeatherDataHandler.ICallback() {
+            @Override
+            public void call(WeatherData weatherData) {
+                if (weatherData != null) add(weatherData);
+            }
+        });
+        wdh.fetch();
     }
 
     public static void addListener(RecyclerView.Adapter adapter) {

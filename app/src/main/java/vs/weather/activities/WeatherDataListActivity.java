@@ -1,4 +1,4 @@
-package vs.weather.views;
+package vs.weather.activities;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +12,7 @@ import android.view.View;
 import vs.weather.data.MyWeatherDataPlaces;
 import vs.weather.R;
 import vs.weather.adapters.WeatherDataListAdapter;
+import vs.weather.fragments.AddPlaceDialogFragment;
 
 public class WeatherDataListActivity extends AppCompatActivity {
 
@@ -32,8 +33,8 @@ public class WeatherDataListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                AddPlaceDialogFragment dialog = new AddPlaceDialogFragment();
+                dialog.show(getSupportFragmentManager(), "AddPlaceDialogFragment");
             }
         });
 

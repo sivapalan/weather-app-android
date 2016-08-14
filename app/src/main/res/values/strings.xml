@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Weather</string>
-    <string name="title_location_detail">Location Detail</string>
+
+    <string name="dialog_add_place_title">Add place</string>
+    <string name="dialog_add_place_message">Enter a place path</string>
+    <string name="dialog_add_place_placepath_example">Ex: United_Kingdom/England/London</string>
+
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+
 </resources>

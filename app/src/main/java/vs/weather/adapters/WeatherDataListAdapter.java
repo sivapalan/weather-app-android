@@ -21,7 +21,7 @@ import vs.weather.models.TabularForecastItem;
 import vs.weather.models.WeatherData;
 import vs.weather.utils.Globals;
 import vs.weather.utils.ImageUtils;
-import vs.weather.views.WeatherDataDetailActivity;
+import vs.weather.activities.WeatherDataDetailActivity;
 
 
 public class WeatherDataListAdapter extends RecyclerView.Adapter<WeatherDataListAdapter.ViewHolder> {

@@ -14,8 +14,8 @@ import vs.weather.data.MyWeatherDataPlaces;
 import vs.weather.R;
 import vs.weather.adapters.WeatherDataDetailAdapter;
 import vs.weather.models.WeatherData;
-import vs.weather.views.WeatherDataDetailActivity;
-import vs.weather.views.WeatherDataListActivity;
+import vs.weather.activities.WeatherDataDetailActivity;
+import vs.weather.activities.WeatherDataListActivity;
 
 /**
  * A fragment representing a single Location detail screen.
