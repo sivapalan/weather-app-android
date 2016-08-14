@@ -13,9 +13,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import vs.weather.data.MyWeatherDataPlaces;
 import vs.weather.R;
+import vs.weather.data.MyWeatherDataPlaces;
 import vs.weather.adapters.WeatherDataListAdapter;
+import vs.weather.dialogs.AboutDialogFragment;
 import vs.weather.dialogs.AddPlaceDialogFragment;
 import vs.weather.models.WeatherData;
 import vs.weather.services.WeatherDataHandler;
@@ -115,7 +116,8 @@ public class WeatherDataListActivity extends AppCompatActivity {
                 });
                 return true;
             case R.id.menu_btn_about:
-                // TODO: Display 'About' info
+                AboutDialogFragment dialog = new AboutDialogFragment();
+                dialog.show(getSupportFragmentManager(), "AboutDialogFragment");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
