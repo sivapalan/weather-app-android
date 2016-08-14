@@ -13,6 +13,8 @@ public class WeatherData {
     @Element
     private Forecast forecast;
 
+    private String placePath;
+
     public Forecast getForecast() {
         return forecast;
     }
@@ -24,5 +26,12 @@ public class WeatherData {
     public Location getLocation() {
         return location;
     }
-    
+
+    public String getPlacePath() {
+        return placePath;
+    }
+
+    public void setPlacePath(String placePath) {
+        this.placePath = placePath;
+    }
 }

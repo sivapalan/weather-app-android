@@ -8,6 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import vs.weather.data.MyWeatherDataPlaces;
@@ -15,6 +18,7 @@ import vs.weather.R;
 import vs.weather.adapters.WeatherDataListAdapter;
 import vs.weather.dialogs.AddPlaceDialogFragment;
 import vs.weather.models.WeatherData;
+import vs.weather.services.WeatherDataHandler;
 
 public class WeatherDataListActivity extends AppCompatActivity {
 
@@ -52,8 +56,6 @@ public class WeatherDataListActivity extends AppCompatActivity {
         mAdapter = new WeatherDataListAdapter(this, MyWeatherDataPlaces.getList());
         mRecyclerView.setAdapter(mAdapter);
 
-        MyWeatherDataPlaces.loadPlaces();
-
         if (findViewById(R.id.weatherdata_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-w900dp).
@@ -89,6 +91,35 @@ public class WeatherDataListActivity extends AppCompatActivity {
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_btn_refresh:
+                MyWeatherDataPlaces.refreshAll(new WeatherDataHandler.ICallback() {
+                    @Override
+                    public void call(WeatherData weatherData) {
+                        if (weatherData != null) {
+                            Snackbar.make(mRecyclerView, R.string.refresh_success, Snackbar.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                return true;
+            case R.id.menu_btn_about:
+                // TODO: Display 'About' info
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

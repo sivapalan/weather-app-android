@@ -1,5 +1,6 @@
 package vs.weather.data;
 
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -14,15 +15,17 @@ public class MyWeatherDataPlaces {
 
     private static List<WeatherData> weatherDataList;
     private static Map<Long, WeatherData> weatherDataMap;
-    public static List<RecyclerView.Adapter> listeners;
+    private static List<RecyclerView.Adapter> listeners;
 
     private static int mostRecentlyRemovedIndex = -1;
     private static WeatherData mostRecentlyRemovedWeatherData;
 
     static {
-        weatherDataMap = new HashMap<>();
         weatherDataList = new ArrayList<>();
+        weatherDataMap = new HashMap<>();
         listeners = new ArrayList<>();
+        loadPlaces();
+        refreshAll(null);
     }
 
     public static Map<Long, WeatherData> getMap() {
@@ -33,7 +36,7 @@ public class MyWeatherDataPlaces {
         return weatherDataList;
     }
 
-    public static void add(WeatherData weatherData){
+    private static void add(WeatherData weatherData){
         long id = weatherData.getLocation().getGeoLocation().getId();
         if (weatherDataMap.containsKey(id)) {
             for (int i = 0; i < weatherDataList.size(); i++) {
@@ -45,9 +48,9 @@ public class MyWeatherDataPlaces {
         } else {
             weatherDataList.add(weatherData);
         }
-        weatherDataMap.put(weatherData.getLocation().getGeoLocation().getId(), weatherData);
+        weatherDataMap.put(id, weatherData);
         notifyListeners();
-        PersistentStorageManager.saveWeatherDataList(getList());
+        savePlaces();
     }
 
     public static WeatherData remove(WeatherData weatherData) {
@@ -58,7 +61,7 @@ public class MyWeatherDataPlaces {
             mostRecentlyRemovedIndex = index;
             mostRecentlyRemovedWeatherData = weatherData;
             notifyListeners();
-            PersistentStorageManager.saveWeatherDataList(getList());
+            savePlaces();
             return  weatherData;
         }
         return null;
@@ -72,10 +75,19 @@ public class MyWeatherDataPlaces {
             mostRecentlyRemovedIndex = -1;
             mostRecentlyRemovedWeatherData = null;
             notifyListeners();
-            PersistentStorageManager.saveWeatherDataList(getList());
+            savePlaces();
             return true;
         } else {
             return false;
+        }
+    }
+
+    public static void refreshAll(WeatherDataHandler.ICallback callback) {
+        int n = weatherDataList.size();
+        for (int i = 0; i < n; i++) {
+            final WeatherData wd = weatherDataList.get(i);
+            if (i == n - 1) addPlace(wd.getPlacePath(), callback);
+            else addPlace(wd.getPlacePath(), null);
         }
     }
 
@@ -83,13 +95,20 @@ public class MyWeatherDataPlaces {
      * Adds a new place and fetches its weather data.
      * @param placePath Path to place.Examples: "<i>Norway/Telemark/Sauherad/Gvarv</i>",
      *                  "<i>USA/New_York/New_York"</i>".
+     * @param callback  An object implementing {@link vs.weather.services.WeatherDataHandler.ICallback}
+     *                  containing code to be executed after data has been fetched.
      * @see WeatherData
+     * @see vs.weather.services.WeatherDataHandler.ICallback
      */
-    public static void addPlace(String placePath) {
+    public static void addPlace(final String placePath, @Nullable final WeatherDataHandler.ICallback callback) {
         WeatherDataHandler wdh = new WeatherDataHandler(placePath, new WeatherDataHandler.ICallback() {
             @Override
             public void call(WeatherData weatherData) {
-                if (weatherData != null) add(weatherData);
+                if (weatherData != null) {
+                    weatherData.setPlacePath(placePath);
+                    add(weatherData);
+                    if (callback != null) callback.call(weatherData);
+                }
             }
         });
         wdh.fetch();
@@ -109,7 +128,7 @@ public class MyWeatherDataPlaces {
         }
     }
 
-    public static void loadPlaces() {
+    private static void loadPlaces() {
         List<WeatherData> storedWeatherDataList = PersistentStorageManager.loadWeatherDataList();
         if (storedWeatherDataList == null) {
             addSamplePlaces();
@@ -118,6 +137,10 @@ public class MyWeatherDataPlaces {
                 add(weatherData);
             }
         }
+    }
+
+    private static void savePlaces() {
+        PersistentStorageManager.saveWeatherDataList(getList());
     }
 
     private static void addSamplePlaces() {
@@ -129,14 +152,8 @@ public class MyWeatherDataPlaces {
                 "Japan/Tokyo/Tokyo"
         };
 
-        for (String place : places) {
-            WeatherDataHandler wdh = new WeatherDataHandler(place, new WeatherDataHandler.ICallback() {
-                @Override
-                public void call(WeatherData weatherData) {
-                    if (weatherData != null) add(weatherData);
-                }
-            });
-            wdh.fetch();
+        for (final String place : places) {
+            addPlace(place, null);
         }
     }
 }
