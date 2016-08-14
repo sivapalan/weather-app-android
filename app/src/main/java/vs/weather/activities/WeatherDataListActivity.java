@@ -52,6 +52,8 @@ public class WeatherDataListActivity extends AppCompatActivity {
         mAdapter = new WeatherDataListAdapter(this, MyWeatherDataPlaces.getList());
         mRecyclerView.setAdapter(mAdapter);
 
+        MyWeatherDataPlaces.loadPlaces();
+
         if (findViewById(R.id.weatherdata_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-w900dp).

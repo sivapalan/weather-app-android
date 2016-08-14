@@ -16,11 +16,13 @@ public class MyWeatherDataPlaces {
     private static Map<Long, WeatherData> weatherDataMap;
     public static List<RecyclerView.Adapter> listeners;
 
+    private static int mostRecentlyRemovedIndex = -1;
+    private static WeatherData mostRecentlyRemovedWeatherData;
+
     static {
         weatherDataMap = new HashMap<>();
         weatherDataList = new ArrayList<>();
         listeners = new ArrayList<>();
-        addSamplePlaces();
     }
 
     public static Map<Long, WeatherData> getMap() {
@@ -45,10 +47,8 @@ public class MyWeatherDataPlaces {
         }
         weatherDataMap.put(weatherData.getLocation().getGeoLocation().getId(), weatherData);
         notifyListeners();
+        PersistentStorageManager.saveWeatherDataList(getList());
     }
-
-    private static int mostRecentlyRemovedIndex = -1;
-    private static WeatherData mostRecentlyRemovedWeatherData;
 
     public static WeatherData remove(WeatherData weatherData) {
         int index = weatherDataList.indexOf(weatherData);
@@ -58,6 +58,7 @@ public class MyWeatherDataPlaces {
             mostRecentlyRemovedIndex = index;
             mostRecentlyRemovedWeatherData = weatherData;
             notifyListeners();
+            PersistentStorageManager.saveWeatherDataList(getList());
             return  weatherData;
         }
         return null;
@@ -71,6 +72,7 @@ public class MyWeatherDataPlaces {
             mostRecentlyRemovedIndex = -1;
             mostRecentlyRemovedWeatherData = null;
             notifyListeners();
+            PersistentStorageManager.saveWeatherDataList(getList());
             return true;
         } else {
             return false;
@@ -104,6 +106,17 @@ public class MyWeatherDataPlaces {
     private static void notifyListeners() {
         for (RecyclerView.Adapter adapter : listeners) {
             adapter.notifyDataSetChanged();
+        }
+    }
+
+    public static void loadPlaces() {
+        List<WeatherData> storedWeatherDataList = PersistentStorageManager.loadWeatherDataList();
+        if (storedWeatherDataList == null) {
+            addSamplePlaces();
+        } else {
+            for (WeatherData weatherData : storedWeatherDataList) {
+                add(weatherData);
+            }
         }
     }
 
