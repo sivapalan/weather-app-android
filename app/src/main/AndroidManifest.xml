@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".WeatherDataListActivity"
+            android:name=".views.WeatherDataListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -21,12 +21,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".WeatherDataDetailActivity"
-            android:parentActivityName=".WeatherDataListActivity"
+            android:name=".views.WeatherDataDetailActivity"
+            android:parentActivityName=".views.WeatherDataListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="vs.weather.WeatherDataListActivity" />
+                android:value="vs.weather.views.WeatherDataListActivity" />
         </activity>
     </application>
 

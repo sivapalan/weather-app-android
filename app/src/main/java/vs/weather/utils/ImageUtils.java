@@ -1,4 +1,4 @@
-package vs.weather.util;
+package vs.weather.utils;
 
 import android.content.Context;
 

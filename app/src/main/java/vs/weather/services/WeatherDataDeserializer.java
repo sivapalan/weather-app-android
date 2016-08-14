@@ -1,11 +1,11 @@
-package vs.weather;
+package vs.weather.services;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
 import java.io.InputStream;
 
-import vs.weather.model.WeatherData;
+import vs.weather.models.WeatherData;
 
 public class WeatherDataDeserializer {
 

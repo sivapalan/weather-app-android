@@ -1,4 +1,4 @@
-package vs.weather;
+package vs.weather.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,7 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import vs.weather.model.WeatherData;
+import vs.weather.data.MyWeatherDataPlaces;
+import vs.weather.R;
+import vs.weather.adapters.WeatherDataDetailAdapter;
+import vs.weather.models.WeatherData;
+import vs.weather.views.WeatherDataDetailActivity;
+import vs.weather.views.WeatherDataListActivity;
 
 /**
  * A fragment representing a single Location detail screen.

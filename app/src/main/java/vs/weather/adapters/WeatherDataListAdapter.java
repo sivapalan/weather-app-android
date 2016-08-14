@@ -1,4 +1,4 @@
-package vs.weather;
+package vs.weather.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,23 +12,25 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
-import vs.weather.model.TabularForecastItem;
-import vs.weather.model.WeatherData;
-import vs.weather.util.Globals;
-import vs.weather.util.ImageUtils;
+import vs.weather.data.MyWeatherDataPlaces;
+import vs.weather.R;
+import vs.weather.fragments.WeatherDataDetailFragment;
+import vs.weather.models.TabularForecastItem;
+import vs.weather.models.WeatherData;
+import vs.weather.utils.Globals;
+import vs.weather.utils.ImageUtils;
+import vs.weather.views.WeatherDataDetailActivity;
 
 
-public class WeatherDataAdapter extends RecyclerView.Adapter<WeatherDataAdapter.ViewHolder> {
+public class WeatherDataListAdapter extends RecyclerView.Adapter<WeatherDataListAdapter.ViewHolder> {
 
     private List<WeatherData> mItems;
     private AppCompatActivity mActivity;
     private boolean mTwoPane;
 
-    public WeatherDataAdapter(AppCompatActivity activity, List<WeatherData> items) {
+    public WeatherDataListAdapter(AppCompatActivity activity, List<WeatherData> items) {
         mActivity = activity;
         mItems = items;
         MyWeatherDataPlaces.addListener(this);

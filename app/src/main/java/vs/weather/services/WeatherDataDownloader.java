@@ -1,11 +1,11 @@
-package vs.weather;
+package vs.weather.services;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-class WeatherDataDownloader {
+public class WeatherDataDownloader {
 
     private static String getAbsoluteUrl(String placePath){
         return "http://www.yr.no/place/" + placePath + "/forecast.xml";

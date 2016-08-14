@@ -1,4 +1,4 @@
-package vs.weather.util;
+package vs.weather.utils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

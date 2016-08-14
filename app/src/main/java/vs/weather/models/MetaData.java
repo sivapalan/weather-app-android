@@ -1,4 +1,4 @@
-package vs.weather.model;
+package vs.weather.models;
 
 import org.simpleframework.xml.Element;
 

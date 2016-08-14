@@ -1,4 +1,4 @@
-package vs.weather;
+package vs.weather.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -11,9 +11,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import vs.weather.model.TabularForecastItem;
-import vs.weather.util.Globals;
-import vs.weather.util.ImageUtils;
+import vs.weather.R;
+import vs.weather.models.TabularForecastItem;
+import vs.weather.utils.Globals;
+import vs.weather.utils.ImageUtils;
 
 public class WeatherDataDetailAdapter extends RecyclerView.Adapter<WeatherDataDetailAdapter.ViewHolder>  {
 

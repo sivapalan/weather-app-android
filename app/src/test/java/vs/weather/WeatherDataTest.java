@@ -7,7 +7,9 @@ import java.util.Date;
 
 import static org.junit.Assert.*;
 
-import vs.weather.model.WeatherData;
+import vs.weather.models.WeatherData;
+import vs.weather.services.WeatherDataDeserializer;
+import vs.weather.services.WeatherDataDownloader;
 
 public class WeatherDataTest {
 

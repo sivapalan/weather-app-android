@@ -1,4 +1,4 @@
-package vs.weather;
+package vs.weather.views;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +8,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+
+import vs.weather.data.MyWeatherDataPlaces;
+import vs.weather.R;
+import vs.weather.adapters.WeatherDataListAdapter;
 
 public class WeatherDataListActivity extends AppCompatActivity {
 
@@ -42,14 +46,14 @@ public class WeatherDataListActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new WeatherDataAdapter(this, MyWeatherDataPlaces.getList());
+        mAdapter = new WeatherDataListAdapter(this, MyWeatherDataPlaces.getList());
         mRecyclerView.setAdapter(mAdapter);
 
         if (findViewById(R.id.weatherdata_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-w900dp).
             // If this view is present, then the activity should be in two-pane mode.
-            ((WeatherDataAdapter) mAdapter).setTwoPane(true);
+            ((WeatherDataListAdapter) mAdapter).setTwoPane(true);
         }
     }
 

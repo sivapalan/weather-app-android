@@ -1,4 +1,4 @@
-package vs.weather;
+package vs.weather.data;
 
 import android.support.v7.widget.RecyclerView;
 
@@ -7,7 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import vs.weather.model.WeatherData;
+import vs.weather.services.WeatherDataHandler;
+import vs.weather.models.WeatherData;
 
 public class MyWeatherDataPlaces {
 
