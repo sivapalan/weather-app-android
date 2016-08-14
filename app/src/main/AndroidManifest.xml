@@ -28,7 +28,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="vs.weather.WeatherDataListActivity" />
         </activity>
-        <activity android:name=".LocationListActivity" />
     </application>
 
 </manifest>
